@@ -1,14 +1,21 @@
 from django.core.exceptions import PermissionDenied, BadRequest
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseForbidden, HttpResponseRedirect, \
     HttpResponsePermanentRedirect
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.template.loader import render_to_string
 
 
 def index(request):
     if request.POST:
         print(request.POST)
-    return HttpResponse('<h1>Women\'s app</h1>')
+    return render(request, "women/index.html")
+    # content = render_to_string("women/index.html")
+    # return HttpResponse(content)
+
+
+def about(request):
+    return render(request, "women/about.html")
 
 
 def categories(request):
@@ -31,7 +38,7 @@ def category_by_slug(request, category_slug):
     # if category_slug == 'music':
     #     url = reverse("archive", args=(2024,))
     #     return HttpResponseRedirect(url)
-        # return HttpResponsePermanentRedirect(url)
+    # return HttpResponsePermanentRedirect(url)
 
     return HttpResponse(f"<h3>Category's slug: {category_slug}</h3>")
 

@@ -6,6 +6,7 @@ register_converter(converters.FourDigitYearConverter, "year4")
 
 urlpatterns = [
     path('', views.index, name="home"),
+    path('about/', views.about, name="about"),
     path('categories/', views.categories, name="categories"),
     path('categories/<int:id>', views.category_by_id, name="categories_by_id"),
     path('categories/<slug:category_slug>', views.category_by_slug,  name="category_by_slug"),
