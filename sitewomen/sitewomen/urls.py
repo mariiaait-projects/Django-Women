@@ -24,3 +24,4 @@ urlpatterns = [
 ]
 
 handler404 = views.page_not_found
+handler403 = views.page_denied
