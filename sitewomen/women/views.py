@@ -4,12 +4,44 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpRespons
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.template.loader import render_to_string
+from django.template.defaultfilters import slugify
+
+menu = ["About site", "Add article", "Feedback", "Login"]
+
+data_db = [
+    {"id": 1, "title": "Angelina Joly", "content": "Biography", "is_published": True},
+    {"id": 2, "title": "Margo Robby", "content": "Biography", "is_published": False},
+    {"id": 3, "title": "Julia Roberts", "content": "Biography", "is_published": True},
+]
+
+
+class MyClass:
+    def __init__(self, num1, num2):
+        self.num1, self.num2 = num1, num2
 
 
 def index(request):
-    if request.POST:
-        print(request.POST)
-    return render(request, "women/index.html")
+    data = {
+        "title": "Main page",
+        "menu": menu,
+        "posts": data_db,
+    }
+
+    # if request.POST:
+    #     print(request.POST)
+
+    # data = {
+    #     "title": "Main page",
+    #     "main_title": "",
+    #     "menu": menu,
+    #     "float": 28,
+    #     "lst": [1, 2, "abc", True],
+    #     "set": {1, 2, 3, 2, 5},
+    #     "dict": {"key_1": "value_1", "key_2": "value_2"},
+    #     "obj": MyClass(10, 20),
+    #     "url": slugify("The Main Page")
+    # }
+    return render(request, "women/index.html", context=data)
     # content = render_to_string("women/index.html")
     # return HttpResponse(content)
 
