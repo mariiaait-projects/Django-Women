@@ -1,10 +1,6 @@
-from django.core.exceptions import PermissionDenied, BadRequest
-from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseForbidden, HttpResponseRedirect, \
-    HttpResponsePermanentRedirect
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseForbidden
 from django.shortcuts import redirect, render
-from django.urls import reverse
-from django.template.loader import render_to_string
-from django.template.defaultfilters import slugify
 
 menu = ["About site", "Add article", "Feedback", "Login"]
 
@@ -15,11 +11,6 @@ data_db = [
 ]
 
 
-class MyClass:
-    def __init__(self, num1, num2):
-        self.num1, self.num2 = num1, num2
-
-
 def index(request):
     data = {
         "title": "Main page",
@@ -27,23 +18,7 @@ def index(request):
         "posts": data_db,
     }
 
-    # if request.POST:
-    #     print(request.POST)
-
-    # data = {
-    #     "title": "Main page",
-    #     "main_title": "",
-    #     "menu": menu,
-    #     "float": 28,
-    #     "lst": [1, 2, "abc", True],
-    #     "set": {1, 2, 3, 2, 5},
-    #     "dict": {"key_1": "value_1", "key_2": "value_2"},
-    #     "obj": MyClass(10, 20),
-    #     "url": slugify("The Main Page")
-    # }
     return render(request, "women/index.html", context=data)
-    # content = render_to_string("women/index.html")
-    # return HttpResponse(content)
 
 
 def about(request):
@@ -66,12 +41,6 @@ def category_by_id(request, id):
 def category_by_slug(request, category_slug):
     if category_slug == 'sport':
         return redirect("archive", 2018, permanent=True)
-
-    # if category_slug == 'music':
-    #     url = reverse("archive", args=(2024,))
-    #     return HttpResponseRedirect(url)
-    # return HttpResponsePermanentRedirect(url)
-
     return HttpResponse(f"<h3>Category's slug: {category_slug}</h3>")
 
 
