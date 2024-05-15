@@ -1,8 +1,13 @@
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseForbidden
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 
-menu = ["About site", "Add article", "Feedback", "Login"]
+menu = [
+    {"title": "Home", "url": "home"},
+    {"title": "About", "url": "about"},
+    {"title": "Articles", "url": "articles"},
+    {"title": "Log in", "url": "login"}
+]
 
 data_db = [
     {"id": 1, "title": "Angelina Joly", "content": "Biography", "is_published": True},
@@ -10,38 +15,36 @@ data_db = [
     {"id": 3, "title": "Julia Roberts", "content": "Biography", "is_published": True},
 ]
 
+data = {
+    "title": "Women",
+    "menu": menu,
+    "posts": data_db,
+}
 
 def index(request):
-    data = {
-        "title": "Main page",
-        "menu": menu,
-        "posts": data_db,
-    }
-
     return render(request, "women/index.html", context=data)
 
 
 def about(request):
-    return render(request, "women/about.html")
+    return render(request, "women/about.html", context=data)
 
 
-def categories(request):
-    return HttpResponse('<h2>Categories</h2>')
-
-
-def category_by_id(request, id):
-    if id == 1:
-        return redirect("archive", 2018)
-
+def woman_by_id(request, id):
     if id == 0:
         raise PermissionDenied()
-    return HttpResponse(f"<h3>Category №{id}</h3>")
+
+    for data in data_db:
+        if id == data["id"]:
+            return render(request, "women/woman_by_id.html", context=data)
+    raise Http404()
 
 
-def category_by_slug(request, category_slug):
-    if category_slug == 'sport':
-        return redirect("archive", 2018, permanent=True)
-    return HttpResponse(f"<h3>Category's slug: {category_slug}</h3>")
+def articles(request):
+    return render(request, "women/articles.html", context=data)
+
+
+def login(request):
+    return render(request, "women/login.html", context=data)
 
 
 def archive(request, year):

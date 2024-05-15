@@ -1,4 +1,4 @@
-from django.urls import path, re_path, register_converter
+from django.urls import path, register_converter
 from . import views
 from . import converters
 
@@ -7,9 +7,8 @@ register_converter(converters.FourDigitYearConverter, "year4")
 urlpatterns = [
     path('', views.index, name="home"),
     path('about/', views.about, name="about"),
-    path('categories/', views.categories, name="categories"),
-    path('categories/<int:id>', views.category_by_id, name="categories_by_id"),
-    path('categories/<slug:category_slug>', views.category_by_slug,  name="category_by_slug"),
+    path('articles/', views.articles, name="articles"),
+    path('login/', views.login, name="login"),
+    path('woman/<int:id>', views.woman_by_id, name="woman_by_id"),
     path('archive/<year4:year>', views.archive, name="archive"),
-    # re_path(r'^archive/(?P<year>[0-9]{4})', views.archive),
 ]

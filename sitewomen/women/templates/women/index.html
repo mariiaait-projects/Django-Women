@@ -1,25 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<body>
-    <h1>{{ title }}</h1>
-    <p>{{ menu }}</p>
+{%extends 'base.html'%}
 
-    <ul>
-        {%for post in posts%}
-            {%if post.is_published%}
-                <li>
-                    <h2>{{ post.title }}</h2>
-                    <p>{{ post.content }}</p>
-                    {%if not forloop.last%}
-                        <hr>
-                    {%endif%}
-                </li>
-            {%endif%}
-        {%endfor%}
-    </ul>
-</body>
-</html>
+{%block content%}
+<ul>
+    {%for post in posts%}
+    {%if post.is_published%}
+    <li>
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.content }}</p>
+        <p><a href="{% url 'woman_by_id' post.id%}">Details</a></p>
+
+        {%if not forloop.last%}
+        <hr>
+        {%endif%}
+    </li>
+    {%endif%}
+    {%endfor%}
+</ul>
+{%endblock%}
